@@ -1,0 +1,5 @@
+﻿  contact.c
+C:\Users\37578\Desktop\gitbox\C 4月\Contact2022.4.29\contact.c(187,21): warning C4047: “=”:“int”与“void *”的间接级别不同
+  test.c
+  正在生成代码...
+  2022.4.30.vcxproj -> E:\C_test\2022.4.30\x64\Debug\2022.4.30.exe

@@ -1,19 +1,69 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include "contact.h"
 
+//静态版本
+//void InitContact(Contact* pc)
+//{
+//	pc->sz = 0;
+//	memset(pc->data, 0, sizeof(pc->data));
+//}
+
+//动态版本
 void InitContact(Contact* pc)
 {
-	pc->sz = 0;
-	memset(pc->data, 0, sizeof(pc->data));
+	pc->data = (PeoInfo*)malloc(DEFAULT_SZ * sizeof(PeoInfo));
+	if(pc->data ==NULL)
+	{
+		perror("InitContact error\n");
+		return;
+	}
+
+	pc->sz = 0; 
+	pc->capacity = DEFAULT_SZ;
 }
 
-
+//静态版本
+//void AddContact(Contact* pc)
+//{
+//	if (pc->sz == MAX)
+//	{
+//		printf("通讯录满了\n");
+//		return;
+//	}
+//	//增加一个人的信息
+//	printf("请输入名字:>");
+//	scanf("%s", pc->data[pc->sz].name);
+//	printf("请输入年龄:>");
+//	scanf("%d", &(pc->data[pc->sz].age));
+//	printf("请输入性别:>");
+//	scanf("%s", pc->data[pc->sz].sex);
+//	printf("请输入电话:>");
+//	scanf("%s", pc->data[pc->sz].tele);
+//	printf("请输入地址:>");
+//	scanf("%s", pc->data[pc->sz].addr);
+//
+//	pc->sz++;
+//	printf("增加成功\n");
+//}
+//动态版本
 void AddContact(Contact* pc)
 {
-	if (pc->sz == MAX)
+	//增容
+	if (pc->sz == pc->capacity)
 	{
-		printf("通讯录满了\n");
-		return;
+		PeoInfo *ptr  = (PeoInfo*)realloc(pc->data, (pc->capacity + INC_SZ) * sizeof(PeoInfo));
+		if (ptr != NULL)
+		{
+			pc->data = ptr; 
+			pc->capacity += INC_SZ;
+			printf("增容成功\n");
+		}
+		else
+		{
+			perror("AddContact error");
+			printf("增容失败\n");	
+			return;
+		}
 	}
 	//增加一个人的信息
 	printf("请输入名字:>");
@@ -30,7 +80,6 @@ void AddContact(Contact* pc)
 	pc->sz++;
 	printf("增加成功\n");
 }
-
 
 void PrintContact(Contact* pc)
 {
@@ -130,4 +179,12 @@ void ModifyContact(Contact* pc)
 		scanf("%s", pc->data[pos].addr);
 		printf("修改成功\n");
 	}
+}
+
+void DestoryContact(Contact* pc)
+{
+	free(pc->data);
+	pc->capacity = NULL;
+	pc->sz = 0;
+	pc->capacity = 0;
 }

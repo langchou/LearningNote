@@ -29,6 +29,8 @@ int main()
 	//创建通讯录
 	Contact con;
 	//初始化通讯录
+	//给data申请一块连续的空间在堆区上
+	//capacity初始化为当前的最大容量
 	InitContact(&con);
 	do
 	{
@@ -55,6 +57,8 @@ int main()
 			PrintContact(&con);
 			break;
 		case EXIT:
+			//销毁通讯录
+			DestoryContact(&con);
 			printf("退出\n");
 			break;
 
