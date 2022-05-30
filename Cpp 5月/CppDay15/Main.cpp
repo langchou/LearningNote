@@ -6,12 +6,19 @@
 int main()
 {
 	WorkerManager wm;
-	Worker* worker = NULL;
-	worker = new Emplyee(1, "张三", 1);
-	worker = new Manager(2, "李四", 2);
-	worker = new Boss(3, "王五", 3);
 
-	worker->ShowInfo();
+	//测试代码
+	//Worker* worker = NULL;
+	//worker = new Emplyee(1, "张三", 1);
+	//worker->ShowInfo();
+	//delete worker;
+	//worker = new Manager(2, "李四", 2);
+	//worker->ShowInfo();
+	//delete worker;
+	//worker = new Boss(3, "王五", 3);
+	//worker->ShowInfo();
+	//delete worker;
+
 
 	while (1)
 	{
@@ -23,6 +30,7 @@ int main()
 		switch (choice)
 		{
 		case 1:	//增加
+			wm.Add_Emp();
 			break;
 		case 2:	//显示
 			break;
