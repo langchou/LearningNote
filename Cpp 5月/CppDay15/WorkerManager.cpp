@@ -27,16 +27,34 @@ WorkerManager::WorkerManager()
 	{
 		//文件为空
 		cout << "文件为空!" << endl;
+		//初始化属性
+		this->m_EmpNum = 0;
+		//初始化指针
+		this->m_EmpArray = NULL;
+		//初始化文件是否为空
+		this->m_FileIsEmpty = true;
+		ifs.close();
+		return;
 	}
-	//初始化属性
-	this->m_EmpNum = 0;
-	//初始化指针
-	this->m_EmpArray = NULL;
-	//初始化文件是否为空
-	this->m_FileIsEmpty = true;
-	ifs.close();
-	return;
 	
+	
+	//文件存在 记录数据
+	int num = this->get_EmpNum();
+	cout << "职工人数为:" << num << endl;
+	this->m_EmpNum = num;
+
+	//开辟空间
+	this->m_EmpArray = new Worker * [this->m_EmpNum];
+	//将文件中的数据，存到数组中
+	this->init_Emp();
+
+	//for (int i = 0; i < this->m_EmpNum; i++)
+	//{
+	//	cout << "职工编号:" << this->m_EmpArray[i]->m_Id
+	//		<< "姓名:" << this->m_EmpArray[i]->m_Name
+	//		<< "部门编号:" << this->m_EmpArray[i]->m_DeptId
+	//		<< endl;
+	//}
 }
 
 //菜单
@@ -64,33 +82,13 @@ void WorkerManager::ExitSystem()
 	exit(0);//退出程序
 }
 
-//保存文件
-void WorkerManager::save()
-{
-	ofstream ofs;
-	ofs.open(FILENAME, ios::out); //用输出的方式打开文件 -写文件
-
-	//将每个人的数据写入文件中
-	for (int i = 0; i < this->m_EmpNum; i++)
-	{
-		ofs << this->m_EmpArray[i]->m_Id << " "
-			<< this->m_EmpArray[i]->m_Name << " "
-			<< this->m_EmpArray[i]->m_DeptId << endl;
-	}
-
-	//关闭文件
-	ofs.close();
-}
-
-
-
-
 //添加职工
 void WorkerManager::Add_Emp()
 {
-	cout << "请输入添加职工数量" << endl;
+	cout << "请输入添加职工数量:" << endl;
 	int addNum = 0;//保存用户的输入数量
 	cin >> addNum;
+
 	if (addNum > 0)
 	{
 		//执行具体添加
@@ -151,7 +149,7 @@ void WorkerManager::Add_Emp()
 		//更改新空间的指向
 		this->m_EmpArray = newSpace;
 		//更新新的职工人数
-		m_EmpNum = newSize;
+		this->m_EmpNum = newSize;
 		//更新职工后 不为空标志
 		this->m_FileIsEmpty = false;
 		//提示
@@ -169,6 +167,82 @@ void WorkerManager::Add_Emp()
 	system("pause");
 	system("cls");
 }
+
+//保存文件
+void WorkerManager::save()
+{
+	ofstream ofs;
+	ofs.open(FILENAME, ios::out); //用输出的方式打开文件 -写文件
+
+	//将每个人的数据写入文件中
+	for (int i = 0; i < this->m_EmpNum; i++)
+	{
+		ofs << this->m_EmpArray[i]->m_Id << " "
+			<< this->m_EmpArray[i]->m_Name << " "
+			<< this->m_EmpArray[i]->m_DeptId << endl;
+	}
+
+	//关闭文件
+	ofs.close();
+}
+
+//统计人数
+int WorkerManager::get_EmpNum()
+{
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+
+	int id;
+	string name;
+	int dId;
+
+	int num = 0;
+
+	while (ifs >> id && ifs >> name && ifs >> dId)
+	{
+		//记录人数
+		num++;
+	}
+	ifs.close();
+
+	return num;
+}
+
+//初始化员工
+void WorkerManager::init_Emp()
+{
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+
+	int id;
+	string name;
+	int dId;
+
+	int index = 0;
+	while (ifs >> id && ifs >> name && ifs >> dId)
+	{
+		Worker* worker = NULL;
+
+		if (dId == 1)//普通员工
+		{
+			worker = new Emplyee(id, name, dId);
+		}
+		else if (dId == 2)//经理
+		{
+			worker = new Manager(id, name, dId);
+		}
+		else if (dId == 3)//老板
+		{
+			worker = new Boss(id, name, dId);
+		}
+
+		this->m_EmpArray[index] = worker;
+		index++;
+	}
+
+	ifs.close();
+}
+
 
 
 WorkerManager::~WorkerManager()

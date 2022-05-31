@@ -20,6 +20,8 @@ public:
 	void ExitSystem();
 	//添加职工
 	void Add_Emp();
+	//初始化员工
+	void init_Emp();
 	//文件保存
 	void save();
 	//职工数组数组
@@ -27,8 +29,8 @@ public:
 	//析构函数
 	~WorkerManager();
 
-
-
+	//统计人数
+	int get_EmpNum();
 	//记录文件中的人数个数
 	int m_EmpNum;
 	//判断文件是否为空
