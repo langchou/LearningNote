@@ -3,7 +3,9 @@
 #include <algorithm> //STL提供的标准算法
 #include <string>
 
+
 using namespace std;
+
 
 void myPrint(int val)
 {
@@ -57,6 +59,7 @@ void test3()
 	}
 }
 
+
 void test1()
 {
 	//创建vector容器	
@@ -88,6 +91,7 @@ void test1()
 	for_each(v.begin(), v.end(), myPrint);
 }
 
+
 void test4()
 {
 	vector<vector<int>> v;
@@ -112,20 +116,93 @@ void test4()
 	v.push_back(v4);
 	v.push_back(v5);
 
-	for (vector<vector<int>>::iterator it; it < v.end; it++)
+	for (vector<vector<int>>::iterator it = v.begin(); it != v.end(); it++)
 	{
-		for (vector<int>::iterator vit; vit < it->end; vit++)
+		for (vector<int>::iterator vit = it->begin(); vit != it->end(); vit++)
 		{
 			cout << (*vit) << " ";
 		}
 		cout << endl;
 	}
 }
+
+void test5()
+{
+	string str1;
+	str1.append("张三");
+	string str2 = "爱玩游戏";
+	str1.append(str2);
+	string str3 = "LOLDNF";
+	str1.append(str3, 3, 3);
+	cout << str1 << endl;
+}
+
+void test6()
+{
+	string str1 = "abcdefg";
+	string str2 = "abcdefgde";
+	int pos = str1.find("de");
+	int pos2 = str2.rfind("de");
+
+	str1.replace(1, 3, "11111");
+	cout << str1 << endl;
+	cout << pos << endl;
+	cout << pos2 << endl;
+}
+
+void test7()
+{
+
+	string str1 = "abcde";
+	string str2 = "abcdf";
+
+	int temp = str1.compare(str2);
+	cout << temp << endl;
+}
+
+void test8()
+{
+	string str1 = "hello";
+	string str2 = "hello";
+	for (int i = 0; i < str1.size(); i++)
+	{
+		cout << str1[i] << " ";
+	}
+	cout << endl;
+	for (int i = 0; i < str1.size(); i++)
+	{
+		cout << str1.at(i) << " ";
+		str1[i] = 'a';
+		cout << str1.at(i) << " ";
+	}
+	cout << endl;
+
+	str2.at(2) = 'L';
+	str2.insert(1, "222");
+	cout << str2 << endl;
+
+	str2.erase(1, 3);
+	cout << str2 << endl;
+
+	string str3 = str2.substr(1, 3);
+	cout << str3 << endl;
+
+	string str4 = "zhangsan@sina.com";
+	int pos = str4.find("@");
+	string usName = str4.substr(0, pos);
+	cout << usName << endl;
+}
+
+
 int main()
 {
 	//test();
 	//test3();
-	test4();
+	//test4();
+	//test5();
+	//test6();
+	//test7();
+	test8();
 	system("pause");
 	return 0;
 }
