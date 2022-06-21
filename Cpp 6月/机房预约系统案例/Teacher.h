@@ -2,6 +2,10 @@
 #include<iostream>
 using namespace std;
 #include "Identity.h"
+#include<vector>
+#include<fstream>
+#include "globalFile.h"
+#include "orderFile.h"
 
 /*
   老师类功能

@@ -1,8 +1,13 @@
 #pragma once
 #include<iostream>
-using namespace std;
+#include<vector>
+#include<fstream>
 #include "Identity.h"
+#include "computerRoom.h"
+#include "globalFile.h"
+#include "orderFile.h"
 
+using namespace std;
 /*
   学生类功能
   显示学生操作的菜单界面
@@ -32,4 +37,5 @@ public:
 	void cancelOrder();
 
 	int Id;
+	vector<computerRoom>vCom;
 };
